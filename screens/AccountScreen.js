@@ -20,6 +20,7 @@ export default function AccountScreen({ navigation }) {
       });
       console.log("Got user name!");
       console.log(response);
+      setUsername(respond.data.username);
     } catch (error) {
       console.log("Error getting user name");
       if (error.response) {
