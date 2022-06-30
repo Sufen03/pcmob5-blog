@@ -19,8 +19,7 @@ export default function AccountScreen({ navigation }) {
         headers: { Authorization: `JWT ${token}` },
       });
       console.log("Got user name!");
-      console.log(response);
-      setUsername(respond.data.username);
+      setUsername(response.data.username);
     } catch (error) {
       console.log("Error getting user name");
       if (error.response) {
@@ -28,11 +27,21 @@ export default function AccountScreen({ navigation }) {
       } else {
         console.log(error);
       }
+      // We should probably go back to the login screen???
     }
   }
 
   useEffect(() => {
+    console.log("Setting up nav listener");
+    // Check for when we come back to this screen
+    const removeListener = navigation.addListener("focus", () => {
+      console.log("Running nav listener");
+      setUsername("");
+      getUsername();
+    });
     getUsername();
+
+    return removeListener;
   }, []);
 
   function signOut() {
